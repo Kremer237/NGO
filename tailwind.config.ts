@@ -10,7 +10,12 @@ const config: Config = {
         surface: "#FEFEFC",
         charcoal: "#171A18",
         slate: "#6B716D",
-        ochre: "#C58A43",
+        // Darkened from the spec's #C58A43 to meet WCAG AA text contrast
+        // (4.5:1) on the Ivory background — the original value tests at
+        // ~2.7:1 wherever it's used for small text (eyebrow labels, badges).
+        // Same hue/saturation, just less light. The brand mark's accent dot
+        // (public/brand/*.svg) is exempt as a logo and keeps the original.
+        ochre: "#93652D",
         border: "#DFE2DC",
         success: "#47745D",
       },

@@ -20,7 +20,7 @@ export default function Metric({
         </p>
       )}
       <p className="mt-2 text-sm text-slate">{metric.title[locale]}</p>
-      {!metric.public && <p className="mt-1 text-xs italic text-slate/80">{pendingLabel}</p>}
+      {!metric.public && <p className="mt-1 text-xs italic text-slate">{pendingLabel}</p>}
     </div>
   );
 }

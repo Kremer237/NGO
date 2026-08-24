@@ -32,10 +32,17 @@
   spec section 66 (`donors`, `campaigns`, `donations`, `recurring_donations`, `payments`,
   `receipts`, `impact_updates`) and the audit log from section 67. No card data is ever modeled —
   only provider reference ids. See `db/README.md`.
-- **Playwright end-to-end tests** (`tests/e2e/`, `npm run test:e2e`): 14 tests covering locale
-  routing, navigation, both forms, and — importantly — the content-governance rule itself
+- **Playwright end-to-end tests** (`tests/e2e/`, `npm run test:e2e`): 26 tests covering locale
+  routing, navigation, both forms, automated accessibility (`@axe-core/playwright`, WCAG 2 A/AA,
+  across 11 pages in both locales), and — importantly — the content-governance rule itself
   (`tests/e2e/content-governance.spec.ts` asserts the unverified figures render as pending, never
   as invented numbers, and that the donate form never fakes a payment success). Wired into CI.
+  The axe run caught two real bugs, both fixed: the accent color (`ochre`, spec section 10) failed
+  WCAG text contrast at the sizes it's actually used at (~2.7:1 against a 4.5:1 requirement) and
+  has been darkened to the same hue at ~4.6:1; the language-switcher link's `aria-label` was
+  overriding its visible "FR"/"EN" text as the accessible name (WCAG 2.5.3). Manual checks from
+  spec section 97 (keyboard-only, VoiceOver/NVDA, 200% zoom) still need a human — axe only covers
+  what's mechanically detectable.
 - **SEO/accessibility basics**: `sitemap.ts`, `robots.ts`, JSON-LD on the homepage, skip-nav link,
   visible focus states, `prefers-reduced-motion` support, semantic landmarks.
 - **Brand placeholder**: a minimal geometric mark (`public/brand/`, see its `README.md`) so the

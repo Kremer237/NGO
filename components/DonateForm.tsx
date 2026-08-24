@@ -109,6 +109,7 @@ export default function DonateForm({ dict, locale, projects }: { dict: Dictionar
         <select
           value={allocation}
           onChange={(e) => setAllocation(e.target.value)}
+          aria-label={d.allocation.label}
           className="mt-3 w-full max-w-sm rounded-button border border-border px-4 py-3 text-sm"
         >
           <option value="greatest">{d.allocation.greatest}</option>
