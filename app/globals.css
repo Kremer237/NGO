@@ -1,0 +1,36 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+:focus-visible {
+  outline: 2px solid #17382f;
+  outline-offset: 2px;
+}
+
+.skip-nav {
+  position: absolute;
+  left: -9999px;
+  top: 0;
+  z-index: 100;
+  background: #f7f5ef;
+  color: #17382f;
+  padding: 0.75rem 1.25rem;
+  border: 1px solid #17382f;
+  border-radius: 4px;
+}
+
+.skip-nav:focus {
+  left: 1rem;
+  top: 1rem;
+}

@@ -1,0 +1,281 @@
+{
+  "meta": {
+    "siteName": "No African Child Left Behind",
+    "tagline": "Chaque enfant mérite un avenir."
+  },
+  "nav": {
+    "about": "À propos",
+    "ourWork": "Nos actions",
+    "projects": "Projets",
+    "impact": "Impact",
+    "stories": "Histoires",
+    "getInvolved": "S'impliquer",
+    "donate": "Faire un don",
+    "volunteer": "Bénévolat",
+    "partner": "Partenariat",
+    "contact": "Contact",
+    "skipToContent": "Aller au contenu"
+  },
+  "home": {
+    "eyebrow": "NO AFRICAN CHILD LEFT BEHIND",
+    "heroTitle": "Chaque enfant mérite un avenir.",
+    "heroText": "Nous agissons directement au Cameroun pour améliorer l'accès à l'éducation, à l'alimentation et aux soins essentiels — afin de créer des opportunités aujourd'hui et construire un avenir meilleur.",
+    "heroCtaPrimary": "Découvrir notre impact",
+    "heroCtaSecondary": "Soutenir notre mission",
+    "heroMicrocopy": "Organisme de bienfaisance canadien (enregistrement en cours) • Actif au Cameroun",
+    "manifestoTitle": "L'avenir d'un enfant ne devrait pas être déterminé par son lieu de naissance.",
+    "manifesto": [
+      "L'éducation peut ouvrir des portes.",
+      "Une alimentation adéquate peut permettre d'apprendre.",
+      "L'accès aux soins peut protéger un avenir avant qu'il ne soit interrompu.",
+      "Nous nous concentrons sur des solutions concrètes permettant aux enfants d'accéder davantage à ces besoins essentiels."
+    ],
+    "impactTitle": "Un impact mesurable.",
+    "impactPendingNote": "Ce chiffre est un espace réservé en attente de validation méthodologique et n'est pas encore publié comme donnée vérifiée.",
+    "programsTitle": "Créer l'accès à ce qui compte le plus.",
+    "whatsNextTitle": "Les prochaines étapes",
+    "whatsNextIntro": "Ces domaines sont à l'étude pour l'avenir — ce ne sont pas encore des programmes actifs.",
+    "whatsNextAreas": [
+      "Eau potable",
+      "Protection de l'enfant",
+      "Autonomisation des familles",
+      "Formation professionnelle",
+      "Logement",
+      "Soutien aux orphelins",
+      "Aide d'urgence",
+      "Programmes d'échange"
+    ],
+    "featuredProjectLabel": "Projet mis en avant",
+    "featuredProjectCta": "Découvrir le projet"
+  },
+  "programs": {
+    "education": {
+      "name": "Éducation",
+      "text": "L'éducation est notre priorité. Nous investissons dans les infrastructures et initiatives éducatives afin de permettre à davantage d'enfants d'accéder à des environnements d'apprentissage sûrs et durables.",
+      "cta": "Découvrir l'éducation"
+    },
+    "nutrition": {
+      "name": "Nutrition",
+      "text": "Il est difficile d'apprendre lorsque la faim devient la première préoccupation. Nos initiatives alimentaires contribuent à fournir des repas aux enfants et aux communautés confrontés à l'insécurité alimentaire.",
+      "cta": "Découvrir la nutrition"
+    },
+    "healthcare": {
+      "name": "Santé",
+      "badge": "Programme en développement",
+      "text": "Nous développons des partenariats visant à améliorer l'accès des enfants et des communautés aux soins de santé essentiels.",
+      "cta": "Notre vision santé"
+    }
+  },
+  "about": {
+    "heroText": "Le potentiel existe partout. Les opportunités, beaucoup moins.",
+    "heroSubtext": "No African Child Left Behind a été créée pour contribuer à réduire cet écart.",
+    "storyTitle": "Notre histoire",
+    "story": [
+      "Tout est parti d'un constat simple.",
+      "Grandir et passer du temps au Cameroun a permis de constater une réalité impossible à ignorer : une population extrêmement jeune et pleine de potentiel, mais encore trop d'enfants qui grandissent sans accès régulier à l'éducation, à une alimentation suffisante, aux soins de santé ou aux opportunités qu'ils méritent.",
+      "Certains enfants passent leurs journées à travailler ou à vendre dans les rues. D'autres connaissent la faim, des interruptions de scolarité ou des situations susceptibles de profondément influencer leur avenir.",
+      "Plutôt que de simplement demander pourquoi ces inégalités existaient, une autre question s'est imposée :",
+      "Que pouvons-nous faire pour changer la situation ?",
+      "No African Child Left Behind est née de cette question.",
+      "Aujourd'hui, notre priorité est l'action concrète : développer les infrastructures scolaires, soutenir l'accès à l'alimentation et construire des initiatives offrant davantage de possibilités aux enfants."
+    ],
+    "missionTitle": "Mission",
+    "mission": "No African Child Left Behind œuvre à améliorer l'accès des enfants à l'éducation, à l'alimentation, aux soins de santé et aux opportunités essentielles, en commençant par le Cameroun et avec l'ambition de bâtir un avenir dans lequel aucun enfant ne sera limité par les circonstances de sa naissance.",
+    "visionTitle": "Vision",
+    "vision": "Nous imaginons une Afrique où chaque enfant peut accéder à une éducation de qualité, à des soins de santé essentiels, à une alimentation adéquate, à l'eau potable et à des opportunités lui permettant de découvrir le monde au-delà de son environnement immédiat.",
+    "principlesTitle": "Nos principes",
+    "principles": [
+      { "number": "01", "title": "Action directe", "text": "Nous construisons et soutenons directement des projets sur le terrain." },
+      { "number": "02", "title": "Impact mesurable", "text": "Notre impact doit être mesurable, documenté et compréhensible." },
+      { "number": "03", "title": "Dignité", "text": "Aider un enfant ne devrait jamais nécessiter de compromettre sa dignité ou sa vie privée." },
+      { "number": "04", "title": "Reddition de comptes", "text": "Les donateurs méritent de comprendre comment les ressources sont utilisées et ce qu'elles permettent de réaliser." }
+    ],
+    "teamTitle": "Notre équipe",
+    "teamText": "Une petite équipe. Un réseau qui grandit.",
+    "teamSubtext": "Notre équipe principale est soutenue par un réseau de plus de 50 bénévoles qui contribuent par leur temps, leur expertise et leur énergie au Canada et au Cameroun.",
+    "teamRoles": ["Fondateur/fondatrice & Directeur/directrice général(e)", "Directeur/directrice", "Directeur/directrice"],
+    "teamNote": "Noms non affichés publiquement pour le moment.",
+    "futureVisionTitle": "Vision d'avenir",
+    "futureVision": "Notre ambition à long terme est de développer des programmes capables de toucher des centaines de milliers, puis à terme plus d'un million d'enfants au Cameroun et en Afrique centrale."
+  },
+  "ourWork": {
+    "heroTitle": "Transformer les ressources en opportunités.",
+    "intro": "Nous concentrons notre action sur trois domaines directs, ainsi qu'un quatrième en développement actif."
+  },
+  "education": {
+    "title": "L'éducation est le point de départ des opportunités.",
+    "text": "Notre travail dans l'éducation consiste à créer et renforcer des environnements permettant aux enfants d'apprendre de façon régulière, sûre et digne.",
+    "sections": [
+      { "title": "Infrastructures scolaires", "text": "Construction et agrandissement des espaces d'apprentissage." },
+      { "title": "Accès à l'éducation", "text": "Soutien aux initiatives de scolarisation." },
+      { "title": "Ressources pédagogiques", "text": "Matériel et équipements, selon les projets." }
+    ],
+    "cta": "Soutenir l'éducation"
+  },
+  "nutrition": {
+    "title": "La faim ne devrait jamais empêcher un enfant d'apprendre.",
+    "text": "Nos initiatives nutritionnelles contribuent à fournir des repas et une aide alimentaire là où les besoins sont les plus importants.",
+    "cta": "Soutenir la nutrition"
+  },
+  "healthcare": {
+    "status": "Programme en développement",
+    "title": "L'accès aux soins protège l'avenir.",
+    "text": "Nous développons des collaborations avec des acteurs de la santé au Cameroun afin de créer des solutions durables facilitant l'accès aux soins essentiels.",
+    "note": "Aucun partenariat hospitalier n'est considéré comme final avant sa signature officielle.",
+    "cta": "Suivre ce programme"
+  },
+  "projects": {
+    "heroTitle": "Découvrez ce que nous construisons.",
+    "filters": { "all": "Tous", "education": "Éducation", "nutrition": "Nutrition", "healthcare": "Santé" },
+    "status": {
+      "planning": "Planification",
+      "fundraising": "Collecte de fonds",
+      "in-progress": "En cours",
+      "completed": "Terminé",
+      "ongoing": "En continu"
+    },
+    "viewProject": "Découvrir le projet",
+    "dataPendingLabel": "Données en attente de vérification avant publication :",
+    "detailLabels": {
+      "location": "Lieu",
+      "status": "Statut",
+      "totalBudget": "Budget total",
+      "funded": "Financé",
+      "remaining": "Restant",
+      "expectedCompletion": "Date de fin prévue",
+      "pending": "À confirmer"
+    },
+    "progress": { "raised": "collecté", "goal": "objectif du projet", "funded": "financé", "remaining": "restant", "pendingNote": "Les données de financement de ce projet ne sont pas encore publiées — les montants apparaîtront ici une fois confirmés." },
+    "supportCta": "Soutenir ce projet"
+  },
+  "impact": {
+    "heroTitle": "Les progrès doivent pouvoir être mesurés.",
+    "heroText": "Nous croyons qu'un impact réel doit pouvoir être accompagné de données réelles.",
+    "sections": ["Indicateurs clés", "Éducation", "Nutrition", "Infrastructures", "Engagement financier", "Impact par année", "Rapports"],
+    "reportsTitle": "Rapports",
+    "reportsEmpty": "Aucun rapport n'a encore été publié. Cette section est prête à recevoir les rapports annuels, de projet et d'impact au fur et à mesure de leur validation."
+  },
+  "whereWeWork": {
+    "heroTitle": "Commencer au Cameroun. Construire pour l'Afrique.",
+    "heroText": "Nos opérations sont actuellement concentrées au Cameroun. À long terme, notre ambition est de nous développer de façon responsable en Afrique centrale, puis dans d'autres régions du continent.",
+    "activeLabel": "Actif",
+    "futureLabel": "Expansion future (pas encore active)"
+  },
+  "stories": {
+    "heroTitle": "Histoires & Impact",
+    "categories": ["Actualités de terrain", "Mises à jour de projet", "Impact", "Rapports", "Actualités", "Appels à l'action"],
+    "empty": "Aucune histoire n'a encore été publiée. Revenez bientôt pour des actualités de terrain, des nouvelles de projets et des rapports d'impact."
+  },
+  "transparency": {
+    "heroTitle": "Votre générosité ne devrait jamais être un mystère.",
+    "sections": {
+      "whereMoneyGoes": "Où va votre argent",
+      "annualReports": "Rapports annuels",
+      "projectReports": "Rapports de projet",
+      "methodology": "Méthodologie d'impact",
+      "governance": "Principes de gouvernance",
+      "policies": "Politiques"
+    },
+    "allocationNote": "La ventilation Programmes / Administration / Collecte de fonds sera publiée ici une fois la répartition de la période fiscale finalisée et vérifiée. Nous ne publierons jamais de pourcentages estimés.",
+    "policiesPending": "La politique financière interne, la politique de remboursement et la procédure d'émission des reçus sont en cours de finalisation et seront publiées ici."
+  },
+  "donate": {
+    "heroTitle": "Aidez-nous à construire la suite.",
+    "heroText": "Votre soutien contribue au développement de l'éducation, de l'alimentation, des soins et d'opportunités essentielles là où les besoins sont les plus importants.",
+    "frequency": { "label": "Fréquence", "oneTime": "Don ponctuel", "monthly": "Don mensuel" },
+    "currency": { "label": "Devise", "cad": "CAD", "usd": "USD" },
+    "amount": { "label": "Montant", "other": "Autre" },
+    "allocation": {
+      "label": "Affectation",
+      "greatest": "Là où le besoin est le plus grand",
+      "education": "Éducation",
+      "nutrition": "Nutrition",
+      "healthcare": "Santé",
+      "project": "Projet actif spécifique"
+    },
+    "feeCover": "Ajouter un montant pour couvrir les frais de transaction.",
+    "trust": ["Paiement sécurisé", "Reçu officiel lorsque le don est admissible", "Vous gardez le contrôle de votre don récurrent"],
+    "submitNote": "Le traitement des paiements en ligne est en cours de finalisation (intégration Stripe en attente de la création du compte organisationnel). Ce formulaire est pleinement fonctionnel jusqu'à l'étape de paiement.",
+    "submit": "Continuer vers le paiement"
+  },
+  "donateSuccess": {
+    "title": "Merci de contribuer à construire un avenir.",
+    "text": "Votre contribution a bien été reçue. Ensemble, nous pouvons continuer à développer l'accès à l'éducation, à l'alimentation, aux soins et aux opportunités.",
+    "ctaImpact": "Voir mon impact",
+    "ctaWork": "Découvrir nos actions"
+  },
+  "volunteer": {
+    "heroTitle": "Donnez de votre temps. Partagez vos compétences.",
+    "cameroonTitle": "Cameroun",
+    "cameroonAreas": ["Logistique", "Mentorat", "Activités de terrain", "Soutien manuel", "Soutien éducatif"],
+    "remoteTitle": "Canada / À distance",
+    "remoteAreas": ["Communications", "Administration", "Soutien à la collecte de fonds", "Numérique", "Expertise professionnelle"],
+    "stepsTitle": "Comment ça marche",
+    "steps": ["Candidature", "Examen", "Entretien", "Intégration"],
+    "formTitle": "Formulaire de candidature bénévole",
+    "form": {
+      "firstName": "Prénom",
+      "lastName": "Nom",
+      "email": "Courriel",
+      "phone": "Téléphone",
+      "country": "Pays",
+      "city": "Ville",
+      "ageConfirm": "Je confirme être âgé(e) de 18 ans ou plus",
+      "volunteerType": "Type de bénévolat souhaité",
+      "skills": "Compétences",
+      "profession": "Profession",
+      "availability": "Disponibilité",
+      "location": "À distance ou sur place",
+      "language": "Langue",
+      "motivation": "Motivation",
+      "cv": "CV (optionnel)",
+      "consent": "Je consens à ce que mes informations soient utilisées pour traiter cette candidature",
+      "submit": "Envoyer ma candidature"
+    }
+  },
+  "partner": {
+    "heroTitle": "Construisons un impact plus grand ensemble.",
+    "heroText": "Nous souhaitons collaborer avec des entreprises, fondations, institutions, organisations de santé, établissements éducatifs et autres partenaires partageant notre engagement en faveur de l'accès aux opportunités.",
+    "cta": "Parler avec notre équipe",
+    "currentPartnersTitle": "Nos partenaires"
+  },
+  "contact": {
+    "heroTitle": "Parlons-nous.",
+    "email": "Courriel",
+    "phone": "Téléphone / WhatsApp",
+    "form": {
+      "name": "Nom",
+      "organization": "Organisation",
+      "email": "Courriel",
+      "subject": "Sujet",
+      "message": "Message",
+      "consent": "Je consens à ce que mes informations soient utilisées pour répondre à ce message",
+      "submit": "Envoyer le message",
+      "categories": ["Général", "Dons", "Partenariat", "Bénévolat", "Médias", "Autre"]
+    }
+  },
+  "forms": {
+    "thankYou": "Merci. Votre message a bien été reçu."
+  },
+  "footer": {
+    "tagline": "Chaque enfant mérite un avenir.",
+    "organization": "Organisation",
+    "getInvolved": "S'impliquer",
+    "transparency": "Transparence",
+    "legal": "Mentions légales",
+    "privacy": "Confidentialité",
+    "cookies": "Témoins (cookies)",
+    "terms": "Conditions d'utilisation",
+    "copyright": "No African Child Left Behind"
+  },
+  "notFound": {
+    "title": "Cette page n'est plus ici. Notre mission, elle, continue.",
+    "cta": "Retour à l'accueil"
+  },
+  "legal": {
+    "privacyTitle": "Politique de confidentialité",
+    "cookiesTitle": "Politique relative aux témoins",
+    "termsTitle": "Conditions d'utilisation",
+    "pendingNotice": "Cette politique est en cours de finalisation en consultation avec des experts en conformité canadienne et sera publiée ici avant la mise en ligne de la plateforme de dons."
+  }
+}
