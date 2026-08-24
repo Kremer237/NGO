@@ -55,6 +55,13 @@
 - **Stories architecture**: `content/stories.ts` and `lib/types.ts` (`Story`) mirror the article
   model from spec section 36; the list is empty because nothing has cleared the content workflow
   (Draft → Review → Approved → Published) yet, not because the route is missing.
+- **Security headers**: `proxy.ts` sets `X-Content-Type-Options`, `Referrer-Policy`,
+  `Permissions-Policy`, and `Strict-Transport-Security` on every page response (spec section 68).
+  A nonce-based Content-Security-Policy was attempted and reverted — tested against a real
+  browser (not just a successful build), it blocked every Next.js/Turbopack-injected chunk
+  script, which would have silently broken all client-side interactivity site-wide. See the
+  comment in `proxy.ts` before re-attempting this; verify any future CSP the same way this one
+  was disproven, by loading the production build in an actual browser and checking the console.
 - **Legal and financial policy drafts**: Privacy Policy, Cookie Policy, Terms of Use, and Donation
   Terms are full working drafts (`content/legal.ts`, live at `/privacy`, `/cookies`, `/terms`,
   `/donation-terms`, each with a visible "not yet reviewed" banner), informed by current PIPEDA and
