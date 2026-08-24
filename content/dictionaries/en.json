@@ -177,7 +177,7 @@
       "policies": "Policies"
     },
     "allocationNote": "Program / Administration / Fundraising allocation percentages will be published here once the fiscal-period breakdown is finalized and verified. We will never publish estimated percentages.",
-    "policiesPending": "Internal financial policy, refund policy and receipt-issuance procedure are being finalized and will be published here."
+    "policiesPending": "Draft policies exist for our donation terms (including refunds), privacy practices, and terms of use — each still pending legal review and board adoption before they're final."
   },
   "donate": {
     "heroTitle": "Help build what comes next.",
@@ -275,11 +275,5 @@
   "notFound": {
     "title": "This page isn't here. The mission still is.",
     "cta": "Return Home"
-  },
-  "legal": {
-    "privacyTitle": "Privacy Policy",
-    "cookiesTitle": "Cookie Policy",
-    "termsTitle": "Terms of Use",
-    "pendingNotice": "This policy is being finalized in consultation with Canadian compliance counsel and will be published here before the donation platform goes live."
   }
 }

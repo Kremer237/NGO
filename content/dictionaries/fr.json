@@ -177,7 +177,7 @@
       "policies": "Politiques"
     },
     "allocationNote": "La ventilation Programmes / Administration / Collecte de fonds sera publiée ici une fois la répartition de la période fiscale finalisée et vérifiée. Nous ne publierons jamais de pourcentages estimés.",
-    "policiesPending": "La politique financière interne, la politique de remboursement et la procédure d'émission des reçus sont en cours de finalisation et seront publiées ici."
+    "policiesPending": "Des ébauches de politiques existent pour nos conditions relatives aux dons (y compris les remboursements), nos pratiques de confidentialité et nos conditions d'utilisation — chacune en attente de révision juridique et d'adoption par le conseil avant d'être définitive."
   },
   "donate": {
     "heroTitle": "Aidez-nous à construire la suite.",
@@ -275,11 +275,5 @@
   "notFound": {
     "title": "Cette page n'est plus ici. Notre mission, elle, continue.",
     "cta": "Retour à l'accueil"
-  },
-  "legal": {
-    "privacyTitle": "Politique de confidentialité",
-    "cookiesTitle": "Politique relative aux témoins",
-    "termsTitle": "Conditions d'utilisation",
-    "pendingNotice": "Cette politique est en cours de finalisation en consultation avec des experts en conformité canadienne et sera publiée ici avant la mise en ligne de la plateforme de dons."
   }
 }
