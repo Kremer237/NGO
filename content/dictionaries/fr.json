@@ -255,7 +255,9 @@
     }
   },
   "forms": {
-    "thankYou": "Merci. Votre message a bien été reçu."
+    "thankYou": "Merci. Votre message a bien été reçu.",
+    "error": "Une erreur est survenue. Veuillez vérifier le formulaire et réessayer.",
+    "sending": "Envoi en cours..."
   },
   "footer": {
     "tagline": "Chaque enfant mérite un avenir.",

@@ -15,10 +15,27 @@
   `ImpactMetric`, `Partner` types mirror the field lists in spec sections 30/50/90, so swapping in
   Sanity (or any headless CMS) later means writing a fetch layer against the same shape, not
   redesigning the pages.
-- **Interactive forms** (Donate, Volunteer, Contact) are fully functional client-side — state,
-  validation, multi-field UI — but stop short of a real network call, since there's no backend or
-  provider account to send to yet. Submitting shows an honest in-UI message rather than a fake
-  success.
+- **Contact and Volunteer forms** do a real round trip: client-side validation plus a server-side
+  validated Route Handler (`app/api/contact`, `app/api/volunteer`, using `lib/validation.ts`) per
+  spec section 79. They don't deliver anywhere yet (no email provider account exists), which is
+  marked with a `TODO(email-provider)` comment at the one line that needs to change once one does.
+- **Donate form** is fully interactive client-side (frequency/currency/amount/allocation) but
+  deliberately does **not** call a payment endpoint — there is no Stripe account to charge against,
+  and simulating a successful charge would be actively dangerous. Submitting shows the honest
+  "payment processing is being finalized" message instead.
+- **CMS schema-as-code** (`cms/schema/`): Sanity-shaped field definitions for `project`,
+  `impactMetric`, `partner`, `story`, `report`, `siteSettings`, written without the `sanity`
+  package as a dependency (see `cms/README.md` for why and how to activate). Mirrors
+  `lib/types.ts` exactly, including the governance defaults (`impactMetric.public: false`,
+  `partner.logoUsageAuthorized: false`, `story.status: "draft"`).
+- **Database migrations** (`db/migrations/`): plain Postgres SQL for the donation data model from
+  spec section 66 (`donors`, `campaigns`, `donations`, `recurring_donations`, `payments`,
+  `receipts`, `impact_updates`) and the audit log from section 67. No card data is ever modeled —
+  only provider reference ids. See `db/README.md`.
+- **Playwright end-to-end tests** (`tests/e2e/`, `npm run test:e2e`): 14 tests covering locale
+  routing, navigation, both forms, and — importantly — the content-governance rule itself
+  (`tests/e2e/content-governance.spec.ts` asserts the unverified figures render as pending, never
+  as invented numbers, and that the donate form never fakes a payment success). Wired into CI.
 - **SEO/accessibility basics**: `sitemap.ts`, `robots.ts`, JSON-LD on the homepage, skip-nav link,
   visible focus states, `prefers-reduced-motion` support, semantic landmarks.
 - **Brand placeholder**: a minimal geometric mark (`public/brand/`, see its `README.md`) so the
@@ -38,32 +55,33 @@ These all require accounts, credentials, or organizational decisions this sessio
 access to. Building them against placeholder/fake credentials would produce something that looks
 done but silently fails in production — worse than not building it.
 
-| Area | Spec section | Needs |
-|---|---|---|
-| Headless CMS (Sanity) | 64 | A Sanity project + API tokens |
-| Database (Postgres/Supabase) | 61, 66 | A provisioned database |
-| Payments (Stripe) | 39, 42, 98 | A verified Stripe organization account |
-| Auth (donor accounts, admin) | 43, 65 | An auth provider + MFA policy decision |
-| Transactional email (Resend/Postmark/SES) | 78, 41 | A domain + DKIM/SPF/DMARC setup |
-| Admin panel + RBAC | 65 | Built on top of the CMS/DB above |
-| Analytics (GA4) | 74 | A GA4 property |
-| Error monitoring (Sentry) | 99 | A Sentry project |
-| Domain, DNS, Cloudflare, SSL | 77, 100 | A purchased domain |
+| Area | Spec section | Needs | What exists already |
+|---|---|---|---|
+| Headless CMS (Sanity) | 64 | A Sanity project + API tokens | Schema-as-code in `cms/schema/`, ready to paste in |
+| Database (Postgres/Supabase) | 61, 66 | A provisioned database | SQL migrations in `db/migrations/`, ready to run |
+| Payments (Stripe) | 39, 42, 98 | A verified Stripe organization account | Donate form UI; no endpoint (see above) |
+| Auth (donor accounts, admin) | 43, 65 | An auth provider + MFA policy decision | — |
+| Transactional email (Resend/Postmark/SES) | 78, 41 | A domain + DKIM/SPF/DMARC setup | Validated API routes with a `TODO` at the send call |
+| Admin panel + RBAC | 65 | Built on top of the CMS/DB above | — |
+| Analytics (GA4) | 74 | A GA4 property | — |
+| Error monitoring (Sentry) | 99 | A Sentry project | `error.tsx`/`global-error.tsx` boundaries already log to console |
+| Domain, DNS, Cloudflare, SSL | 77, 100 | A purchased domain | `.env.example` documents `NEXT_PUBLIC_SITE_URL` |
 
 ## Recommended integration path
 
-1. **CMS**: stand up Sanity, define schemas matching `lib/types.ts` (`Project`, `ImpactMetric`,
-   `Partner`), then replace the static imports in `content/*.ts` with Sanity fetch calls. Page
-   components don't change — they already consume these shapes.
-2. **Database + Auth**: provision Postgres (Supabase is the path of least resistance), stand up
-   the `Donor`/`Donation`/`RecurringDonation` tables from spec section 66, add an auth provider for
-   admin + (later) donor accounts.
+1. **CMS**: stand up Sanity, follow `cms/README.md` to turn `cms/schema/*.ts` into real
+   `defineType` calls, then replace the static imports in `content/*.ts` with Sanity fetch calls.
+   Page components don't change — they already consume these shapes.
+2. **Database + Auth**: provision Postgres (Supabase is the path of least resistance), run
+   `db/migrations/*.sql` in order, add an auth provider for admin + (later) donor accounts.
 3. **Payments**: create the Stripe organization account, add Stripe Elements to `DonateForm.tsx`
    (`components/DonateForm.tsx`) behind a new `/api/donations` route, wire webhooks for
-   success/failure/recurring events into the Donation table.
-4. **Email**: pick a transactional provider, wire the Contact and Volunteer form submissions
-   (`components/ContactForm.tsx`, `components/VolunteerForm.tsx`) to real endpoints, add the
-   automated donation emails from spec section 41.
+   success/failure/recurring events into the `donations`/`payments` tables (idempotent on
+   `provider_payment_id` — spec section 98).
+4. **Email**: pick a transactional provider and fill in the single `TODO(email-provider)` line in
+   `app/api/contact/route.ts` and `app/api/volunteer/route.ts` — both already do full client +
+   server validation (spec section 79) and just need the send call. Add the automated donation
+   emails from spec section 41 once payments exist.
 5. **Receipts**: only after the ARC (CRA) registration number and legal identity are confirmed —
    see `CONTENT-TODO.md`. Do not build receipt generation against placeholder legal data.
 6. **Admin panel**: once the CMS and DB exist, this becomes mostly Sanity Studio (content) +

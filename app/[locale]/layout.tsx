@@ -22,6 +22,7 @@ export async function generateMetadata({
   const locale = resolveLocale(rawLocale);
   const dict = getDictionary(locale);
   return {
+    metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL ?? "https://noafricanchildleftbehind.org"),
     title: { default: dict.meta.siteName, template: `%s — ${dict.meta.siteName}` },
     description: dict.meta.tagline,
     alternates: {

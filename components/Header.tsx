@@ -44,7 +44,7 @@ export default function Header({ locale, dict }: { locale: Locale; dict: Diction
         </nav>
 
         <div className="hidden items-center gap-4 lg:flex">
-          <Link href={altHref} className="text-sm font-medium text-slate hover:text-forest" aria-label="Switch language">
+          <Link href={altHref} className="text-sm font-medium text-slate hover:text-forest">
             {otherLocale(locale).toUpperCase()}
           </Link>
           <Button href={`/${locale}/donate`} variant="primary">

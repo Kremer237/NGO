@@ -255,7 +255,9 @@
     }
   },
   "forms": {
-    "thankYou": "Thank you. Your message has been received."
+    "thankYou": "Thank you. Your message has been received.",
+    "error": "Something went wrong. Please check the form and try again.",
+    "sending": "Sending..."
   },
   "footer": {
     "tagline": "Every Child Deserves a Future.",

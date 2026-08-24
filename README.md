@@ -15,9 +15,10 @@ and `CONTENT-TODO.md` for what content is intentionally left blank pending verif
 
 ```bash
 npm install
-npm run dev      # http://localhost:3000
-npm run build    # production build
+npm run dev       # http://localhost:3000
+npm run build     # production build
 npm run lint
+npm run test:e2e  # Playwright — builds, starts, and exercises the site
 ```
 
 Visiting `/` redirects to `/en` (default) or `/fr` based on the browser's `Accept-Language`
@@ -27,10 +28,16 @@ header. Every page exists under both `/en/...` and `/fr/...`.
 
 ```
 app/[locale]/        Route segments (one tree, two locales via generateStaticParams)
+app/api/              Route Handlers (Contact, Volunteer — validated, not yet wired to an
+                      email provider)
 components/          Design-system components (Header, Footer, Button, cards, forms, ...)
 content/             CMS-shaped content: dictionaries (en.json/fr.json), projects, impact
-                      metrics, partners — structured to be swapped for a headless CMS later
-lib/                 i18n helpers and TypeScript types mirroring the future CMS schema
+                      metrics, partners, stories — structured to be swapped for a headless CMS
+cms/schema/          Sanity schema-as-code mirroring lib/types.ts (see cms/README.md)
+db/migrations/       Postgres SQL for the donation data model (see db/README.md)
+lib/                 i18n helpers, TypeScript types mirroring the future CMS schema, validation
+tests/e2e/           Playwright smoke tests, including a check that unverified figures never
+                      render as fact
 ```
 
 ## Content governance
