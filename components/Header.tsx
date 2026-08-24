@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { useState } from "react";
 import type { Locale } from "@/lib/i18n";
@@ -27,8 +28,11 @@ export default function Header({ locale, dict }: { locale: Locale; dict: Diction
   return (
     <header className="sticky top-0 z-50 border-b border-border bg-ivory/95 backdrop-blur">
       <Container className="flex h-20 items-center justify-between">
-        <Link href={`/${locale}`} className="font-heading text-lg font-semibold tracking-tight text-forest">
-          No African Child Left Behind
+        <Link href={`/${locale}`} className="flex items-center gap-3">
+          <Image src="/brand/mark-color.svg" alt="" width={22} height={24} className="shrink-0" priority />
+          <span className="font-heading text-lg font-semibold tracking-tight text-forest">
+            No African Child Left Behind
+          </span>
         </Link>
 
         <nav className="hidden items-center gap-8 lg:flex" aria-label="Primary">

@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image";
 import type { Locale, Dictionary } from "@/lib/i18n";
 import Container from "./Container";
 
@@ -46,6 +47,7 @@ export default function Footer({ locale, dict }: { locale: Locale; dict: Diction
       <Container className="py-16">
         <div className="grid grid-cols-2 gap-10 md:grid-cols-6">
           <div className="col-span-2 md:col-span-2">
+            <Image src="/brand/mark-ivory.svg" alt="" width={26} height={28} className="mb-3" />
             <p className="font-heading text-lg font-semibold">No African Child Left Behind</p>
             <p className="mt-2 text-sm text-ivory/70">{dict.footer.tagline}</p>
           </div>

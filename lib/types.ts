@@ -40,6 +40,22 @@ export interface ImpactMetric {
   public: boolean;
 }
 
+export type StoryCategory = "field-updates" | "project-updates" | "impact" | "reports" | "news" | "calls-to-action";
+
+// Mirrors the article model in spec section 36. No entries exist yet — the
+// content workflow (Draft -> Review -> Approved -> Published) has nothing
+// approved to publish, so this stays an empty list until the org writes one.
+export interface Story {
+  slug: { en: string; fr: string };
+  title: { en: string; fr: string };
+  date: string;
+  category: StoryCategory;
+  featured_image: string | null;
+  summary: { en: string; fr: string };
+  body: { en: string; fr: string };
+  related_project: string | null;
+}
+
 // Mirrors the Partner model in section 50 — a logo only renders when
 // logo_usage_authorized is explicitly true.
 export interface Partner {

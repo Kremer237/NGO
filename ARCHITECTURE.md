@@ -21,6 +21,16 @@
   success.
 - **SEO/accessibility basics**: `sitemap.ts`, `robots.ts`, JSON-LD on the homepage, skip-nav link,
   visible focus states, `prefers-reduced-motion` support, semantic landmarks.
+- **Brand placeholder**: a minimal geometric mark (`public/brand/`, see its `README.md`) so the
+  site isn't shipping with zero identity — favicon, apple touch icon, and a per-locale dynamic
+  OG/social-share image are wired up from it. This is explicitly not the final logo; spec section
+  12 calls for a real design deliverable.
+- **CI**: `.github/workflows/ci.yml` runs lint, type check, and build on every push/PR.
+- **Error handling**: `app/[locale]/error.tsx` (in-app boundary) and `app/global-error.tsx`
+  (catastrophic fallback) per spec section 68/96.
+- **Stories architecture**: `content/stories.ts` and `lib/types.ts` (`Story`) mirror the article
+  model from spec section 36; the list is empty because nothing has cleared the content workflow
+  (Draft → Review → Approved → Published) yet, not because the route is missing.
 
 ## What's deliberately not built, and why
 
