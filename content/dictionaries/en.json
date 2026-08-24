@@ -257,7 +257,8 @@
   "forms": {
     "thankYou": "Thank you. Your message has been received.",
     "error": "Something went wrong. Please check the form and try again.",
-    "sending": "Sending..."
+    "sending": "Sending...",
+    "privacyNote": "See our Privacy Policy for how we handle your information."
   },
   "footer": {
     "tagline": "Every Child Deserves a Future.",

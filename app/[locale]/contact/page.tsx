@@ -41,7 +41,7 @@ export default async function ContactPage({ params }: { params: Promise<{ locale
             </div>
           </dl>
         </div>
-        <ContactForm dict={dict} />
+        <ContactForm dict={dict} locale={locale} />
       </div>
     </Section>
   );

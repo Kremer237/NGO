@@ -257,7 +257,8 @@
   "forms": {
     "thankYou": "Merci. Votre message a bien été reçu.",
     "error": "Une erreur est survenue. Veuillez vérifier le formulaire et réessayer.",
-    "sending": "Envoi en cours..."
+    "sending": "Envoi en cours...",
+    "privacyNote": "Consultez notre Politique de confidentialité pour savoir comment nous traitons vos renseignements."
   },
   "footer": {
     "tagline": "Chaque enfant mérite un avenir.",

@@ -1,12 +1,13 @@
 "use client";
 
 import { useState } from "react";
-import type { Dictionary } from "@/lib/i18n";
+import Link from "next/link";
+import type { Dictionary, Locale } from "@/lib/i18n";
 import Button from "./Button";
 
 type Status = "idle" | "sending" | "success" | "error";
 
-export default function VolunteerForm({ dict }: { dict: Dictionary }) {
+export default function VolunteerForm({ dict, locale }: { dict: Dictionary; locale: Locale }) {
   const [status, setStatus] = useState<Status>("idle");
   const f = dict.volunteer.form;
 
@@ -69,6 +70,11 @@ export default function VolunteerForm({ dict }: { dict: Dictionary }) {
         <input type="checkbox" name="consent" required className="h-5 w-5" />
         {f.consent}
       </label>
+      <p className="text-xs text-slate sm:col-span-2">
+        <Link href={`/${locale}/privacy`} className="underline underline-offset-2 hover:text-forest">
+          {dict.forms.privacyNote}
+        </Link>
+      </p>
       {status === "error" && <p className="text-sm text-red-700 sm:col-span-2">{dict.forms.error}</p>}
       <div className="sm:col-span-2">
         <Button type="submit" variant="primary">

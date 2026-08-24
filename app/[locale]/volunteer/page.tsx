@@ -57,7 +57,7 @@ export default async function VolunteerPage({ params }: { params: Promise<{ loca
       <Section tone="ivory">
         <h2 className="font-heading text-2xl font-semibold text-forest">{v.formTitle}</h2>
         <div className="mt-8 max-w-2xl">
-          <VolunteerForm dict={dict} />
+          <VolunteerForm dict={dict} locale={locale} />
         </div>
       </Section>
     </>

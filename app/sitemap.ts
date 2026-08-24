@@ -23,6 +23,7 @@ const staticPaths = [
   "privacy",
   "cookies",
   "terms",
+  "donation-terms",
 ];
 
 export default function sitemap(): MetadataRoute.Sitemap {

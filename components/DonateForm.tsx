@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import Link from "next/link";
 import type { Dictionary } from "@/lib/i18n";
 import type { Project } from "@/lib/types";
 import type { Locale } from "@/lib/i18n";
@@ -139,7 +140,12 @@ export default function DonateForm({ dict, locale, projects }: { dict: Dictionar
       </ul>
 
       {submitted ? (
-        <div className="border border-ochre bg-ochre/10 p-5 text-sm text-charcoal">{d.submitNote}</div>
+        <div className="border border-ochre bg-ochre/10 p-5 text-sm text-charcoal">
+          <p>{d.submitNote}</p>
+          <Link href={`/${locale}/donation-terms`} className="mt-2 inline-block underline underline-offset-2 hover:text-forest">
+            {dict.footer.donationTerms}
+          </Link>
+        </div>
       ) : (
         <Button type="submit" variant="primary" className="w-full sm:w-auto">
           {d.submit}
