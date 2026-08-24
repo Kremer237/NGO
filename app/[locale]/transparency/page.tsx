@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Link from "next/link";
 import { getDictionary, resolveLocale, type Locale } from "@/lib/i18n";
 import Section from "@/components/Section";
 
@@ -53,6 +54,19 @@ export default async function TransparencyPage({ params }: { params: Promise<{ l
           <div>
             <h2 className="font-heading text-lg font-semibold text-forest">{sections.policies}</h2>
             <p className="mt-2 text-sm text-slate">{dict.transparency.policiesPending}</p>
+            <ul className="mt-3 flex flex-col gap-1 text-sm">
+              {[
+                { href: "donation-terms", label: dict.footer.donationTerms },
+                { href: "privacy", label: dict.footer.privacy },
+                { href: "terms", label: dict.footer.terms },
+              ].map((p) => (
+                <li key={p.href}>
+                  <Link href={`/${locale}/${p.href}`} className="text-forest underline underline-offset-2 hover:text-ochre">
+                    {p.label}
+                  </Link>
+                </li>
+              ))}
+            </ul>
           </div>
         </div>
       </Section>

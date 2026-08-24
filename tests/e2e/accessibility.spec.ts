@@ -13,9 +13,12 @@ const pages = [
   "/en/donate",
   "/en/volunteer",
   "/en/contact",
+  "/en/privacy",
+  "/en/donation-terms",
   "/fr",
   "/fr/about",
   "/fr/donate",
+  "/fr/donation-terms",
 ];
 
 for (const path of pages) {

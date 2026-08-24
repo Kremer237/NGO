@@ -55,6 +55,14 @@
 - **Stories architecture**: `content/stories.ts` and `lib/types.ts` (`Story`) mirror the article
   model from spec section 36; the list is empty because nothing has cleared the content workflow
   (Draft → Review → Approved → Published) yet, not because the route is missing.
+- **Legal and financial policy drafts**: Privacy Policy, Cookie Policy, Terms of Use, and Donation
+  Terms are full working drafts (`content/legal.ts`, live at `/privacy`, `/cookies`, `/terms`,
+  `/donation-terms`, each with a visible "not yet reviewed" banner), informed by current PIPEDA and
+  CRA guidance. `docs/receipt-issuance-procedure.md` specs a CRA-compliant receipt number format
+  and required fields; `docs/refund-and-financial-policy.md` specs the refund workflow and a
+  proposed (not actual) Programs/Admin/Fundraising target and classification method. None of these
+  invent the organization's actual legal identity or historical figures — see `CONTENT-TODO.md`
+  for exactly what's drafted vs. what's a genuine unresolved fact.
 
 ## What's deliberately not built, and why
 

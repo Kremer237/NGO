@@ -38,6 +38,7 @@ export default function Footer({ locale, dict }: { locale: Locale; dict: Diction
         { href: `/${locale}/privacy`, label: dict.footer.privacy },
         { href: `/${locale}/cookies`, label: dict.footer.cookies },
         { href: `/${locale}/terms`, label: dict.footer.terms },
+        { href: `/${locale}/donation-terms`, label: dict.footer.donationTerms },
       ],
     },
   ];
