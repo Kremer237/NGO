@@ -52,9 +52,39 @@
 - **CI**: `.github/workflows/ci.yml` runs lint, type check, and build on every push/PR.
 - **Error handling**: `app/[locale]/error.tsx` (in-app boundary) and `app/global-error.tsx`
   (catastrophic fallback) per spec section 68/96.
-- **Stories architecture**: `content/stories.ts` and `lib/types.ts` (`Story`) mirror the article
-  model from spec section 36; the list is empty because nothing has cleared the content workflow
-  (Draft → Review → Approved → Published) yet, not because the route is missing.
+- **Admin panel with RBAC — actually built and tested, not just speced** (spec section 65):
+  password login (`bcryptjs` + `jose`-signed JWT session cookie), five roles (`super_admin`,
+  `admin`, `content_editor`, `finance`, `marketing`), and route protection enforced at the edge
+  in `proxy.ts` — an unauthenticated request to `/admin/*` never reaches the page, and
+  `/admin/users` redirects anyone who isn't `super_admin` before it renders. `/admin/posts` is a
+  full Stories (blog post) editor — create/edit, an image uploader, and the Draft → Review →
+  Approved → Published → Archived workflow from spec section 93 — and `/admin/users` lets a Super
+  Admin create personnel accounts (never self-service signup). `npm run create-admin` bootstraps
+  the first account. Every login, upload, post edit, status change, and account creation writes
+  to `audit_log` (spec section 67). This was built against a real local Postgres in this session
+  and verified end-to-end with a real browser — login, RBAC denial, post creation with an actual
+  uploaded image, the full workflow, and the published result appearing on the live public
+  `/stories` pages — not just typechecked. `tests/e2e/admin.spec.ts` re-runs that same
+  verification in CI against a `postgres:16` service container
+  (`.github/workflows/ci.yml`) and skips locally when `DATABASE_URL` isn't set.
+- **Stories are DB-backed on the public site**: `app/[locale]/stories/*` reads published rows via
+  `lib/stories-repo.ts` (ISR, `revalidate = 60` — a publish can take up to a minute to appear,
+  which the admin UI tells the editor), falling back to the static (empty) `content/stories.ts`
+  list when no database is configured, so the public site never crashes without one. The CMS
+  schema-as-code (`cms/schema/story.ts`) still exists for a future Sanity migration, but the
+  working blog today is this Postgres-backed one, not Sanity.
+- **Image uploads** (`lib/storage.ts`): a small adapter interface with two implementations — local
+  disk (writes to `public/uploads/`, tested and working in dev/a persistent Node server, but
+  **not viable on Vercel or other serverless hosts** since their filesystem is read-only/ephemeral
+  at runtime) and Vercel Blob (written against the real `@vercel/blob` SDK, selected automatically
+  once `BLOB_READ_WRITE_TOKEN` is set, but untestable in this session — it needs a Vercel project
+  with Blob storage enabled). Enable Blob storage before relying on image uploads in production.
+- **What's explicitly not in the admin panel yet**: MFA (spec section 65/68 call for it;
+  `admin_users.mfa_secret` exists but nothing enforces it — every login is password-only), a
+  forced password change or self-service reset flow (a Super Admin sets a temporary password and
+  shares it out of band; there's no "forgot password" since no email provider exists), and
+  Finance/Marketing-specific screens (those roles can log in and see the dashboard, but there's no
+  donation or campaign data yet for a dedicated screen to manage).
 - **Security headers**: `proxy.ts` sets `X-Content-Type-Options`, `Referrer-Policy`,
   `Permissions-Policy`, and `Strict-Transport-Security` on every page response (spec section 68).
   A nonce-based Content-Security-Policy was attempted and reverted — tested against a real
@@ -79,23 +109,27 @@ done but silently fails in production — worse than not building it.
 
 | Area | Spec section | Needs | What exists already |
 |---|---|---|---|
-| Headless CMS (Sanity) | 64 | A Sanity project + API tokens | Schema-as-code in `cms/schema/`, ready to paste in |
-| Database (Postgres/Supabase) | 61, 66 | A provisioned database | SQL migrations in `db/migrations/`, ready to run |
+| Headless CMS (Sanity) | 64 | A Sanity project + API tokens | Schema-as-code in `cms/schema/`, ready to paste in — not needed for the working Postgres-backed Stories editor |
+| Production database (Postgres/Supabase) | 61, 66 | A provisioned database | Full schema in `db/migrations/`, tested end-to-end against a real Postgres, ready to run against production |
 | Payments (Stripe) | 39, 42, 98 | A verified Stripe organization account | Donate form UI; no endpoint (see above) |
-| Auth (donor accounts, admin) | 43, 65 | An auth provider + MFA policy decision | — |
+| Admin MFA | 65, 68 | A decision on TOTP vs. another factor | `admin_users.mfa_secret` column exists; nothing enforces it yet |
+| Donor accounts | 43 | Depends on the above + a UX decision (V1.1 per spec) | — |
 | Transactional email (Resend/Postmark/SES) | 78, 41 | A domain + DKIM/SPF/DMARC setup | Validated API routes with a `TODO` at the send call |
-| Admin panel + RBAC | 65 | Built on top of the CMS/DB above | — |
+| Image storage in production | — | A Vercel Blob store (or S3) enabled on the hosting project | `lib/storage.ts` picks it up automatically via `BLOB_READ_WRITE_TOKEN`; local-disk fallback works but isn't viable on serverless |
 | Analytics (GA4) | 74 | A GA4 property | — |
 | Error monitoring (Sentry) | 99 | A Sentry project | `error.tsx`/`global-error.tsx` boundaries already log to console |
 | Domain, DNS, Cloudflare, SSL | 77, 100 | A purchased domain | `.env.example` documents `NEXT_PUBLIC_SITE_URL` |
 
 ## Recommended integration path
 
-1. **CMS**: stand up Sanity, follow `cms/README.md` to turn `cms/schema/*.ts` into real
-   `defineType` calls, then replace the static imports in `content/*.ts` with Sanity fetch calls.
-   Page components don't change — they already consume these shapes.
-2. **Database + Auth**: provision Postgres (Supabase is the path of least resistance), run
-   `db/migrations/*.sql` in order, add an auth provider for admin + (later) donor accounts.
+1. **Database**: provision Postgres (Supabase is the path of least resistance), run
+   `db/migrations/*.sql` in order (`for f in db/migrations/*.sql; do psql "$DATABASE_URL" -f "$f"; done`),
+   set `DATABASE_URL` and `AUTH_SECRET` (`openssl rand -base64 32`) on the hosting project, then
+   `npm run create-admin -- --email you@org.org --name "Your Name" --role super_admin` to
+   bootstrap the first account. The admin panel and Stories editor work immediately at that point
+   — this is the one step in this list that's already fully built and tested, not just speced.
+2. **Image storage**: enable Vercel Blob on the project (or point `lib/storage.ts` at S3) and set
+   `BLOB_READ_WRITE_TOKEN` — without it, uploaded images only work in local dev.
 3. **Payments**: create the Stripe organization account, add Stripe Elements to `DonateForm.tsx`
    (`components/DonateForm.tsx`) behind a new `/api/donations` route, wire webhooks for
    success/failure/recurring events into the `donations`/`payments` tables (idempotent on
@@ -106,9 +140,13 @@ done but silently fails in production — worse than not building it.
    emails from spec section 41 once payments exist.
 5. **Receipts**: only after the ARC (CRA) registration number and legal identity are confirmed —
    see `CONTENT-TODO.md`. Do not build receipt generation against placeholder legal data.
-6. **Admin panel**: once the CMS and DB exist, this becomes mostly Sanity Studio (content) +
-   a thin custom panel for finance/donation data with the RBAC roles from spec section 65.
-7. **Ops**: domain purchase → DNS/Cloudflare → deploy to Vercel → GA4 + Search Console → Sentry →
+6. **CMS (optional)**: the admin panel's Postgres-backed Stories editor already covers spec
+   section 64's core need (personnel writing/publishing content). Only migrate to Sanity
+   (`cms/README.md`) if the org specifically wants a headless-CMS editorial workflow beyond what
+   `/admin/posts` provides.
+7. **MFA + donor accounts**: add TOTP enforcement to the admin login (spec section 65/68), then
+   consider a donor-facing account system (spec section 43, V1.1) once payments exist.
+8. **Ops**: domain purchase → DNS/Cloudflare → deploy to Vercel → GA4 + Search Console → Sentry →
    automated backups. This is the section 100 checklist; do it once the above are wired.
 
 ## Notes on decisions made without explicit sign-off

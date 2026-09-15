@@ -8,6 +8,23 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
+    services:
+      postgres:
+        image: postgres:16
+        env:
+          POSTGRES_USER: naclb
+          POSTGRES_PASSWORD: ci_only
+          POSTGRES_DB: naclb
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+    env:
+      DATABASE_URL: postgres://naclb:ci_only@localhost:5432/naclb
+      AUTH_SECRET: ci-only-secret-not-used-in-production-do-not-reuse
     steps:
       - uses: actions/checkout@v4
 
@@ -26,6 +43,17 @@ jobs:
 
       - name: Build
         run: npm run build
+
+      - name: Run database migrations
+        run: |
+          for f in db/migrations/*.sql; do
+            PGPASSWORD=ci_only psql -h localhost -U naclb -d naclb -v ON_ERROR_STOP=1 -f "$f"
+          done
+
+      - name: Bootstrap e2e test admin accounts
+        run: |
+          npm run create-admin -- --email editor@e2e.test --name "E2E Editor" --role content_editor --password "E2eTestPassword123!"
+          npm run create-admin -- --email super@e2e.test --name "E2E Super Admin" --role super_admin --password "E2eTestPassword123!"
 
       - name: Install Playwright browsers
         run: npx playwright install --with-deps chromium

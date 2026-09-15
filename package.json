@@ -7,24 +7,32 @@
     "build": "next build",
     "start": "next start",
     "lint": "eslint .",
-    "test:e2e": "playwright test"
+    "test:e2e": "playwright test",
+    "create-admin": "tsx scripts/create-admin.ts"
   },
   "dependencies": {
-    "next": "16.3.2",
+    "@vercel/blob": "^2.8.0",
+    "bcryptjs": "^3.0.3",
+    "jose": "^6.2.12",
+    "next": "16.3.5",
+    "pg": "^8.23.0",
     "react": "^18.3.1",
     "react-dom": "^18.3.1"
   },
   "devDependencies": {
     "@axe-core/playwright": "^4.13.0",
     "@playwright/test": "^1.62.1",
+    "@types/bcryptjs": "^2.4.6",
     "@types/node": "^20.14.9",
+    "@types/pg": "^8.23.1",
     "@types/react": "^18.3.3",
     "@types/react-dom": "^18.3.0",
     "autoprefixer": "^10.4.19",
     "eslint": "^9.17.0",
-    "eslint-config-next": "16.3.2",
+    "eslint-config-next": "16.3.5",
     "postcss": "^8.4.39",
     "tailwindcss": "^3.4.4",
+    "tsx": "^4.23.13",
     "typescript": "^5.5.3"
   }
 }

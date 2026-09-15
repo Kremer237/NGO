@@ -1,16 +1,22 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { getDictionary, resolveLocale } from "@/lib/i18n";
-import { stories, getStoryBySlug } from "@/content/stories";
+import { getStoryBySlug as getStaticStoryBySlug } from "@/content/stories";
+import { getPublishedStoryBySlug } from "@/lib/stories-repo";
 import Section from "@/components/Section";
 
-export function generateStaticParams() {
-  // No stories are published yet — nothing to pre-render. New entries in
-  // content/stories.ts (or a future CMS) will be picked up automatically.
-  return stories.flatMap((s) => [
-    { locale: "en", slug: s.slug.en },
-    { locale: "fr", slug: s.slug.fr },
-  ]);
+// New stories are created through /admin/posts after deploy, so slugs
+// aren't known at build time — dynamicParams (default true) lets Next
+// render any slug on demand and cache it for `revalidate` seconds.
+export const revalidate = 60;
+
+export async function generateStaticParams() {
+  // Nothing to pre-render — every published story is fetched on demand.
+  return [];
+}
+
+async function resolveStory(locale: "en" | "fr", slug: string) {
+  return (await getPublishedStoryBySlug(locale, slug)) ?? getStaticStoryBySlug(locale, slug) ?? null;
 }
 
 export async function generateMetadata({
@@ -20,7 +26,7 @@ export async function generateMetadata({
 }): Promise<Metadata> {
   const { locale: rawLocale, slug } = await params;
   const locale = resolveLocale(rawLocale);
-  const story = getStoryBySlug(locale, slug);
+  const story = await resolveStory(locale, slug);
   const dict = getDictionary(locale);
   if (!story) return { title: dict.stories.heroTitle };
   return { title: story.title[locale], description: story.summary[locale] };
@@ -33,7 +39,7 @@ export default async function StoryDetailPage({
 }) {
   const { locale: rawLocale, slug } = await params;
   const locale = resolveLocale(rawLocale);
-  const story = getStoryBySlug(locale, slug);
+  const story = await resolveStory(locale, slug);
   if (!story) notFound();
 
   return (
@@ -42,8 +48,10 @@ export default async function StoryDetailPage({
       <h1 className="mt-3 max-w-2xl font-heading text-3xl font-semibold leading-tight text-forest md:text-5xl">
         {story.title[locale]}
       </h1>
-      <p className="mt-2 text-sm text-slate">{story.date}</p>
-      <div className="mt-8 max-w-2xl text-base leading-relaxed text-charcoal/85">{story.body[locale]}</div>
+      <p className="mt-2 text-sm text-slate">{new Date(story.date).toLocaleDateString(locale)}</p>
+      <div className="mt-8 max-w-2xl whitespace-pre-wrap text-base leading-relaxed text-charcoal/85">
+        {story.body[locale]}
+      </div>
     </Section>
   );
 }

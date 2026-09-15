@@ -29,3 +29,7 @@ next-env.d.ts
 /test-results/
 /playwright-report/
 /blob-report/
+
+# local-disk storage adapter output (lib/storage.ts) — dev only, never
+# viable in production (see the adapter's own doc comment)
+/public/uploads/

@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { defaultLocale, locales } from "@/lib/i18n";
+import { SESSION_COOKIE, verifySession } from "@/lib/auth";
 
 // Spec section 68: secure headers.
 //
@@ -21,8 +22,50 @@ const SECURITY_HEADERS: Record<string, string> = {
   "Strict-Transport-Security": "max-age=63072000; includeSubDomains; preload",
 };
 
-export function proxy(request: NextRequest) {
+function withSecurityHeaders(response: NextResponse) {
+  for (const [key, value] of Object.entries(SECURITY_HEADERS)) {
+    response.headers.set(key, value);
+  }
+  return response;
+}
+
+// /admin isn't locale-prefixed (it's an internal tool, English-only by
+// design — spec section 65's admin panel isn't part of the bilingual
+// public site) so it needs its own branch before the locale logic below,
+// which would otherwise treat "/admin/..." as a path missing a locale
+// prefix and redirect it to "/en/admin/...".
+async function handleAdmin(request: NextRequest): Promise<NextResponse> {
   const { pathname } = request.nextUrl;
+
+  if (pathname === "/admin/login") {
+    return withSecurityHeaders(NextResponse.next());
+  }
+
+  const token = request.cookies.get(SESSION_COOKIE)?.value;
+  const session = token ? await verifySession(token) : null;
+
+  if (!session) {
+    const loginUrl = request.nextUrl.clone();
+    loginUrl.pathname = "/admin/login";
+    return withSecurityHeaders(NextResponse.redirect(loginUrl));
+  }
+
+  if (pathname.startsWith("/admin/users") && session.role !== "super_admin") {
+    const dashboardUrl = request.nextUrl.clone();
+    dashboardUrl.pathname = "/admin";
+    dashboardUrl.searchParams.set("denied", "1");
+    return withSecurityHeaders(NextResponse.redirect(dashboardUrl));
+  }
+
+  return withSecurityHeaders(NextResponse.next());
+}
+
+export async function proxy(request: NextRequest) {
+  const { pathname } = request.nextUrl;
+
+  if (pathname === "/admin" || pathname.startsWith("/admin/")) {
+    return handleAdmin(request);
+  }
 
   const pathnameHasLocale = locales.some(
     (locale) => pathname === `/${locale}` || pathname.startsWith(`/${locale}/`)
@@ -35,18 +78,10 @@ export function proxy(request: NextRequest) {
 
     const url = request.nextUrl.clone();
     url.pathname = `/${locale}${pathname}`;
-    const redirectResponse = NextResponse.redirect(url);
-    for (const [key, value] of Object.entries(SECURITY_HEADERS)) {
-      redirectResponse.headers.set(key, value);
-    }
-    return redirectResponse;
+    return withSecurityHeaders(NextResponse.redirect(url));
   }
 
-  const response = NextResponse.next();
-  for (const [key, value] of Object.entries(SECURITY_HEADERS)) {
-    response.headers.set(key, value);
-  }
-  return response;
+  return withSecurityHeaders(NextResponse.next());
 }
 
 export const config = {
