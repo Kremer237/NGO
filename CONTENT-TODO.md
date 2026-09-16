@@ -55,22 +55,25 @@ a decision. Each carries a visible "not yet reviewed" banner on the live page an
       and "invested in impact" (internal-only; not shown on the public site). Adopting a
       definition doesn't verify the number — see the next section.
 
-## Impact metrics — numbers still need real data (spec section 89/90/116)
+## Impact metrics — status (spec section 89/90/116)
 
-All in `content/impact-metrics.ts`, each `public: false` — the site shows an em dash and a
-"pending verification" note instead of a number. A definition now exists for how to count each one
-(above); flip to `public: true` only once someone has actually reconciled a real count against
-that definition, for a stated period, with a source:
+All in `content/impact-metrics.ts`. As of 2026-09-16, all four are `public: true`:
 
-- [ ] `children-reached-education` ("42,000+") — needs a real count reconciled against school
-      enrollment/attendance records, for a stated period
-- [ ] `meals-provided` ("1M+") — needs a real count reconciled against distribution records, for a
-      stated period and location
-- [ ] `invested-in-impact` ("100M+ XAF") — needs a real figure reconciled against finance records,
-      for a stated fiscal year
+- [x] `children-reached-education` ("42,000+") — confirmed by the site administrator via chat
+      during development (see `verified_by` on the record itself for the exact wording — this was
+      a verbal confirmation, not an independent audit against enrollment records)
+- [x] `meals-provided` ("1M+") — confirmed the same way, not yet reconciled against distribution
+      records
+- [x] `invested-in-impact` ("100M+ XAF") — confirmed the same way, not yet reconciled against
+      finance records
+- [x] `volunteers` ("50+") — organizational headcount per spec section 24, not a number requiring
+      external proof
 
-`volunteers` ("50+") is treated as already-public organizational copy per spec section 24, not a
-number requiring external proof.
+**If these ever need to hold up under real scrutiny** (a CRA inquiry, a major donor's due
+diligence, an annual report audit), they should be reconciled against the actual underlying
+records described in each metric's `definition` field before that happens — a chat confirmation
+establishes that someone with authority stands behind the number today, not that it has been
+independently verified against source documents.
 
 ## The Yaoundé School Expansion Project (spec section 31)
 

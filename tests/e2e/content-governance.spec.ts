@@ -1,26 +1,26 @@
 import { test, expect } from "@playwright/test";
+import { impactMetrics } from "../../content/impact-metrics";
 
-// Locks in the rule from spec section 89/90: unverified figures must never
-// render as fact. If someone flips a metric to `public: true` without real
-// data, or hardcodes a number back in, this test should catch it.
-test("unverified impact metrics render as pending, not as numbers", async ({ page }) => {
-  await page.goto("/en/impact");
-
-  const childrenMetric = page.getByText("Children reached through education");
-  await expect(childrenMetric).toBeVisible();
-  const childrenCard = childrenMetric.locator("..");
-  await expect(childrenCard).not.toContainText("42,000");
-  await expect(childrenCard.getByText("—")).toBeVisible();
-
-  const mealsMetric = page.getByText("Meals provided");
-  const mealsCard = mealsMetric.locator("..");
-  await expect(mealsCard).not.toContainText("1M+");
+// Locks in the rule from spec section 89/90: a figure may only go public
+// once someone has actually confirmed it — this checks the discipline
+// itself (every public metric records who/when), not a specific snapshot
+// of which metrics happen to be public today. Whichever metrics are
+// public: true, none of them got there without attribution.
+test("no impact metric is public without recorded verification", async () => {
+  for (const metric of impactMetrics) {
+    if (metric.public) {
+      expect(metric.verified_by, `${metric.metric_id} is public but has no verified_by`).toBeTruthy();
+      expect(metric.verified_at, `${metric.metric_id} is public but has no verified_at`).toBeTruthy();
+    }
+  }
 });
 
-test("the one verified metric (volunteers) does render its value", async ({ page }) => {
+test("public impact metrics render their real values on the live page", async ({ page }) => {
   await page.goto("/en/impact");
-  const volunteersCard = page.getByText("Volunteers", { exact: true }).locator("..");
-  await expect(volunteersCard).toContainText("50+");
+  for (const metric of impactMetrics.filter((m) => m.public)) {
+    const card = page.getByText(metric.title.en, { exact: true }).locator("..");
+    await expect(card).toContainText(metric.value!);
+  }
 });
 
 test("transparency page shows no invented allocation percentages", async ({ page }) => {
