@@ -41,6 +41,18 @@ export async function POST(request: Request) {
       <p><strong>Message:</strong></p>
       <p>${escapeHtml(message).replace(/\n/g, "<br>")}</p>
     `,
+    text: [
+      "New contact form submission",
+      `Name: ${name}`,
+      `Email: ${email}`,
+      organization ? `Organization: ${organization}` : "",
+      category ? `Subject: ${category}` : "",
+      "",
+      "Message:",
+      message,
+    ]
+      .filter(Boolean)
+      .join("\n"),
   });
 
   if (!sent) {

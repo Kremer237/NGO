@@ -42,9 +42,11 @@ export async function POST(request: Request) {
   const email = String(body.email);
   const country = String(body.country);
 
-  const optionalRows = OPTIONAL_FIELDS.filter((key) => body[key]).map(
+  const presentOptional = OPTIONAL_FIELDS.filter((key) => body[key]);
+  const optionalRowsHtml = presentOptional.map(
     (key) => `<p><strong>${key}:</strong> ${escapeHtml(String(body[key]))}</p>`
   );
+  const optionalRowsText = presentOptional.map((key) => `${key}: ${String(body[key])}`);
 
   const sent = await sendNotificationEmail({
     subject: `New volunteer application from ${firstName} ${lastName}`,
@@ -54,8 +56,15 @@ export async function POST(request: Request) {
       <p><strong>Name:</strong> ${escapeHtml(firstName)} ${escapeHtml(lastName)}</p>
       <p><strong>Email:</strong> ${escapeHtml(email)}</p>
       <p><strong>Country:</strong> ${escapeHtml(country)}</p>
-      ${optionalRows.join("\n")}
+      ${optionalRowsHtml.join("\n")}
     `,
+    text: [
+      "New volunteer application",
+      `Name: ${firstName} ${lastName}`,
+      `Email: ${email}`,
+      `Country: ${country}`,
+      ...optionalRowsText,
+    ].join("\n"),
   });
 
   if (!sent) {
