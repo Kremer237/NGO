@@ -1,10 +1,22 @@
 import { NextResponse } from "next/server";
 import { isValidEmail, requireString, requireTrue, type FieldErrors } from "@/lib/validation";
+import { escapeHtml, sendNotificationEmail } from "@/lib/email";
 
-// See app/api/contact/route.ts for the same disclaimer: validates the
-// application shape (spec section 48/79) but does not yet forward it
-// anywhere, since no email provider or applicant-tracking destination is
-// configured.
+// See app/api/contact/route.ts: validates the application shape (spec
+// section 48/79), then emails it. No applicant-tracking system destination
+// is configured yet (see ARCHITECTURE.md) — email is the only channel.
+const OPTIONAL_FIELDS = [
+  "phone",
+  "city",
+  "volunteerType",
+  "profession",
+  "location",
+  "language",
+  "skills",
+  "availability",
+  "motivation",
+] as const;
+
 export async function POST(request: Request) {
   let body: Record<string, unknown>;
   try {
@@ -25,7 +37,30 @@ export async function POST(request: Request) {
     return NextResponse.json({ ok: false, errors }, { status: 400 });
   }
 
-  // TODO(email-provider / ATS): forward the application once a destination is configured.
+  const firstName = String(body.firstName);
+  const lastName = String(body.lastName);
+  const email = String(body.email);
+  const country = String(body.country);
+
+  const optionalRows = OPTIONAL_FIELDS.filter((key) => body[key]).map(
+    (key) => `<p><strong>${key}:</strong> ${escapeHtml(String(body[key]))}</p>`
+  );
+
+  const sent = await sendNotificationEmail({
+    subject: `New volunteer application from ${firstName} ${lastName}`,
+    replyTo: email,
+    html: `
+      <h2>New volunteer application</h2>
+      <p><strong>Name:</strong> ${escapeHtml(firstName)} ${escapeHtml(lastName)}</p>
+      <p><strong>Email:</strong> ${escapeHtml(email)}</p>
+      <p><strong>Country:</strong> ${escapeHtml(country)}</p>
+      ${optionalRows.join("\n")}
+    `,
+  });
+
+  if (!sent) {
+    return NextResponse.json({ ok: false, errors: { form: "send_failed" } }, { status: 502 });
+  }
 
   return NextResponse.json({ ok: true });
 }
